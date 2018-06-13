@@ -1,4 +1,4 @@
-package com.github.anurag145.impulseattendance.Service;
+package com.github.anurag145.impulseattendance.geofence;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -18,7 +18,7 @@ import com.github.anurag145.impulseattendance.MainActivity;
 import com.github.anurag145.impulseattendance.helper.Constants;
 import com.github.anurag145.impulseattendance.helper.NotificationBuilder;
 
-public class NotificationService extends Service {
+public class GeofenceNotificationHandler extends Service {
 
     private static final String LOG_TAG = "ForegroundService";
     @Override

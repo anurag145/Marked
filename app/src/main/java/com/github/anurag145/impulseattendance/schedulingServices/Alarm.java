@@ -11,7 +11,7 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.widget.Toast;
 
-import com.github.anurag145.impulseattendance.Service.NotificationService;
+import com.github.anurag145.impulseattendance.geofence.GeofenceForegroundServiceHandler;
 import com.github.anurag145.impulseattendance.helper.Constants;
 
 public class Alarm extends BroadcastReceiver {
@@ -28,7 +28,7 @@ public class Alarm extends BroadcastReceiver {
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
         wl.acquire(10000);
 
-        Intent startIntent = new Intent(context, NotificationService.class);
+        Intent startIntent = new Intent(context, GeofenceForegroundServiceHandler.class);
         startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
         context.startService(startIntent);
         wl.release();
