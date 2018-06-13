@@ -9,13 +9,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
-import com.github.anurag145.impulseattendance.MainActivity;
+import com.github.anurag145.impulseattendance.activities.MainActivity;
 import com.github.anurag145.impulseattendance.R;
-import com.github.anurag145.impulseattendance.R;
-import com.github.anurag145.impulseattendance.Service.NotificationService;
+import com.github.anurag145.impulseattendance.geofence.GeofenceForegroundServiceHandler;
 
 import static com.github.anurag145.impulseattendance.helper.Constants.CHANNEL_ID;
 
@@ -31,7 +29,7 @@ public class NotificationBuilder {
                     | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
                     notificationIntent, 0);
-            Intent previousIntent = new Intent(context, NotificationService.class);
+            Intent previousIntent = new Intent(context, GeofenceForegroundServiceHandler.class);
             previousIntent.setAction(Constants.ACTION.STOPFOREGROUND_ACTION);
             PendingIntent ppreviousIntent = PendingIntent.getService(context, 0,
                     previousIntent, 0);

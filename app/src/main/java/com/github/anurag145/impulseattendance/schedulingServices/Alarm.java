@@ -1,4 +1,4 @@
-package com.github.anurag145.impulseattendance;
+package com.github.anurag145.impulseattendance.schedulingServices;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

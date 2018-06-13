@@ -1,24 +1,18 @@
 package com.github.anurag145.impulseattendance.geofence;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import com.github.anurag145.impulseattendance.R;
 
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
-import com.github.anurag145.impulseattendance.MainActivity;
 import com.github.anurag145.impulseattendance.helper.Constants;
 import com.github.anurag145.impulseattendance.helper.NotificationBuilder;
 
-public class GeofenceNotificationHandler extends Service {
+public class GeofenceForegroundServiceHandler extends Service {
 
     private static final String LOG_TAG = "ForegroundService";
     @Override
@@ -31,7 +25,7 @@ public class GeofenceNotificationHandler extends Service {
 
         try {
             if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
-                NotificationCompat.Builder myBuilder = NotificationBuilder.showNotification(getApplicationContext(), intent, flags, startId);
+                NotificationCompat.Builder myBuilder = NotificationBuilder.showNotification(this, intent, flags, startId);
 
                 startForeground(Constants.NOTIFICATION_ID,
                         myBuilder.build());
