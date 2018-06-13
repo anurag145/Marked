@@ -3,6 +3,7 @@
     package="com.github.anurag145.impulseattendance">
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -19,8 +20,16 @@
             </intent-filter>
         </activity>
         <receiver android:name=".schedulingServices.Alarm" android:exported="false"/>
-        <service android:name=".geofence.GeofenceForegroundServiceHandler" >
-        </service>
+        <service android:name=".geofence.GeofenceForegroundServiceHandler"/>
+        <receiver
+            android:name=".geofence.GeofenceBroadcastReceiver"
+            android:enabled="true"
+            />
+
+        <service
+            android:name=".geofence.GeofenceTransitionsJobIntentService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

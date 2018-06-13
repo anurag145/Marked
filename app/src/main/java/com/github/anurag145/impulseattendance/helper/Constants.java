@@ -1,6 +1,9 @@
 package com.github.anurag145.impulseattendance.helper;
 
 import java.util.HashMap;
+
+
+import com.github.anurag145.impulseattendance.geofence.GeofenceForegroundServiceHandler;
 import com.google.android.gms.maps.model.LatLng;
 public class Constants {
     public static final CharSequence VERBOSE_NOTIFICATION_CHANNEL_NAME =
@@ -12,33 +15,38 @@ public class Constants {
     public static final int NOTIFICATION_ID = 1;
 
     public interface ACTION {
-        public static String MAIN_ACTION = "com.truiton.foregroundservice.action.main";
-        public static String PREV_ACTION = "com.truiton.foregroundservice.action.prev";
-        public static String PLAY_ACTION = "com.truiton.foregroundservice.action.play";
-        public static String NEXT_ACTION = "com.truiton.foregroundservice.action.next";
-        public static String STARTFOREGROUND_ACTION = "com.truiton.foregroundservice.action.startforeground";
-        public static String STOPFOREGROUND_ACTION = "com.truiton.foregroundservice.action.stopforeground";
+        public static String MAIN_ACTION = "com.github.anurag145.impulseattendance.action.main";
+        public static String PREV_ACTION = "com.github.anurag145.impulseattendance.action.prev";
+        public static String PLAY_ACTION = "com.github.anurag145.impulseattendance.action.play";
+        public static String NEXT_ACTION = "com.github.anurag145.impulseattendance.action.next";
+        public static String STARTFOREGROUND_ACTION = "com.github.anurag145.impulseattendance.action.startforeground";
+        public static String STOPFOREGROUND_ACTION = "com.github.anurag145.impulseattendance.action.stopforeground";
     }
 
     public interface NOTIFICATION_ID {
         public static int FOREGROUND_SERVICE = 101;
     }
+    public static final String PACKAGE_NAME = "com.github.anurag145.impulseattendance";
 
-    private static final long GEOFENCE_EXPIRATION_IN_HOURS = 12;
-    static final long GEOFENCE_EXPIRATION_IN_MILLISECONDS =
+    public static final String GEOFENCES_ADDED_KEY = PACKAGE_NAME + ".GEOFENCES_ADDED_KEY";
+    public static final long GEOFENCE_EXPIRATION_IN_HOURS = 2;
+     public static final long GEOFENCE_EXPIRATION_IN_MILLISECONDS =
             GEOFENCE_EXPIRATION_IN_HOURS * 60 * 60 * 1000;
-    static final float GEOFENCE_RADIUS_IN_METERS = 50; // 1 mile, 1.6 km
+  public   static final float GEOFENCE_RADIUS_IN_METERS = 50; // 1 mile, 1.6 km
 
     /**
      * Map for storing information about Offices in Gurgoan
      */
-    static final HashMap<String, LatLng> BAY_AREA_LANDMARKS = new HashMap<>();
+     public  static  final HashMap<String, LatLng> OfficeLocation = new HashMap<>();
 
     static {
-        // San Francisco International Airport.
-        BAY_AREA_LANDMARKS.put("SFO", new LatLng(28.430967, 77.01433999999));
 
-        // Googleplex.
-        BAY_AREA_LANDMARKS.put("GOOGLE", new LatLng(37.422611,-122.0840577));
+        OfficeLocation.put("SFO", new LatLng(28.430967, 77.01433999999));
+
+
+        OfficeLocation.put("GOOGLE", new LatLng(37.422611,-122.0840577));
+
+
     }
+    public static GeofenceForegroundServiceHandler ob =null;
 }

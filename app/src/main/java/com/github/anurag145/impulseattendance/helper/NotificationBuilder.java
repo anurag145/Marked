@@ -19,7 +19,36 @@ import static com.github.anurag145.impulseattendance.helper.Constants.CHANNEL_ID
 
 public class NotificationBuilder {
     private static final String LOG_TAG = "ForegroundService";
-    public static NotificationCompat.Builder showNotification(Context context, Intent intent, int flags, int startId)
+
+    public static  NotificationCompat.Builder showNotification(Context context,String message)
+    {   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        CharSequence name = Constants.VERBOSE_NOTIFICATION_CHANNEL_NAME;
+        String description = Constants.VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION;
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel channel =
+                new NotificationChannel(CHANNEL_ID, name, importance);
+        channel.setDescription(description);
+
+        // Add the channel
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (notificationManager != null) {
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(context,CHANNEL_ID)
+                .setContentTitle("ImpulseAttendance")
+                .setTicker("ImpulseAttendance")
+                .setContentText(message)
+                .setSmallIcon(R.drawable.ic_launcher_foreground);
+
+                   return notification;
+    }
+
+    public static NotificationCompat.Builder showNotificationForeground(Context context, Intent intent, int flags, int startId)
     {
 
             Log.i(LOG_TAG, "Received Start Foreground Intent ");

@@ -24,8 +24,8 @@
     <string name="geofence_transition_notification_text">
         Click notification to return to app
     </string>
-
-    <string name="insufficient_permissions">Insufficient permissions.</string>
+     <string name="geofencing_stoped">Geofence was terminated. Use other services to mark attendance, or reactivate geofence</string>
+    <string name="insufficient_permissions">Insufficient permissions for Geofence.</string>
     <string name="permission_rationale">Location permission is needed for core functionality</string>
     <string name="permission_denied_explanation">Permission was denied, but is needed for core
         functionality.</string>
