@@ -35,10 +35,11 @@ import java.util.Map;
 public class GeofenceForegroundServiceHandler extends Service implements OnCompleteListener<Void> {
 
     private static final String LOG_TAG = "GeofenceForeground";
-    private GeofencingClient mGeofencingClient;
+    public GeofencingClient mGeofencingClient;
     private ArrayList<Geofence> mGeofenceList;
     private PendingIntent mGeofencePendingIntent;
     private   NotificationCompat.Builder myBuilder;
+    public boolean terminatedByUser=false;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -65,7 +66,7 @@ public class GeofenceForegroundServiceHandler extends Service implements OnCompl
                     .build());
         }
     }
-    private GeofencingRequest getGeofencingRequest() {
+    public GeofencingRequest getGeofencingRequest() {
         GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
         builder.addGeofences(mGeofenceList);
@@ -79,7 +80,7 @@ public class GeofenceForegroundServiceHandler extends Service implements OnCompl
     }
 
 
-    private PendingIntent getGeofencePendingIntent() {
+    public PendingIntent getGeofencePendingIntent() {
 
         if (mGeofencePendingIntent != null) {
             return mGeofencePendingIntent;
@@ -104,6 +105,7 @@ public class GeofenceForegroundServiceHandler extends Service implements OnCompl
                     myBuilder = NotificationBuilder.showNotificationForeground(this, intent, flags, startId);
                     startForeground(Constants.NOTIFICATION_ID,
                             myBuilder.build());
+
                     mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
                             .addOnCompleteListener(this);
 
@@ -121,6 +123,8 @@ public class GeofenceForegroundServiceHandler extends Service implements OnCompl
             } else if (intent.getAction().equals(
                     Constants.ACTION.STOPFOREGROUND_ACTION)) {
                 Log.i(LOG_TAG, "Received Stop Foreground Intent");
+                terminatedByUser=true;
+
                 mGeofencingClient.removeGeofences(getGeofencePendingIntent()).addOnCompleteListener(this);
                 myBuilder = NotificationBuilder.showNotification(this,this.getResources().getString(R.string.geofencing_stoped));
                 NotificationManagerCompat.from(this).notify(Constants.NOTIFICATION_ID, myBuilder.build());
@@ -160,12 +164,15 @@ public class GeofenceForegroundServiceHandler extends Service implements OnCompl
     public void onComplete(@NonNull Task<Void> task) {
         if (task.isSuccessful()) {
         updateGeofencesAdded(!getGeofencesAdded());
+            Log.i("Terminated",Boolean.toString(terminatedByUser));
+           Log.i("I Added",Boolean.toString(getGeofencesAdded()));
 
-          if(!getGeofencesAdded())
-          {
-              stopForeground(false);
+          if((!getGeofencesAdded())&&terminatedByUser)
+          {  Toast.makeText(getApplicationContext(),"Idhar hoon",Toast.LENGTH_SHORT).show();
+
               NotificationBuilder.showNotification(this,this.getResources().getString(R.string.geofencing_stoped));
-              stopSelf();
+              NotificationManagerCompat.from(this).notify(Constants.NOTIFICATION_ID, myBuilder.build());
+
           }else
           {
               Toast.makeText(getApplicationContext(),"geofence started",Toast.LENGTH_SHORT).show();

@@ -47,17 +47,26 @@ public class GeofenceTransitionsJobIntentService extends JobIntentService {
             String geofenceTransitionDetails = getGeofenceTransitionDetails(geofenceTransition,
                     triggeringGeofences);
 
-           Constants.ob.stopForeground(true);
-           NotificationCompat.Builder myBuilder= NotificationBuilder.showNotification(getApplicationContext(),geofenceTransitionDetails);
-           NotificationManagerCompat.from(this).notify(Constants.NOTIFICATION_ID, myBuilder.build());
-           Constants.ob.stopSelf();
+            Constants.ob.stopForeground(true);
+            Constants.ob.terminatedByUser=false;
+            Constants.ob.mGeofencingClient.removeGeofences(Constants.ob.getGeofencePendingIntent()).addOnCompleteListener(Constants.ob);
+            NotificationCompat.Builder myBuilder = NotificationBuilder.showNotification(getApplicationContext(), geofenceTransitionDetails);
+            NotificationManagerCompat.from(this).notify(Constants.NOTIFICATION_ID, myBuilder.build());
+            Constants.ob.stopSelf();
 
-           Log.i(TAG, geofenceTransitionDetails);
+            Log.i(TAG, geofenceTransitionDetails);
         } else {
             // Log the error.
             Log.e(TAG, getString(R.string.geofence_transition_invalid_type, geofenceTransition));
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("I am ", "dead too");
+    }
+
     public static void enqueueWork(Context context, Intent intent)
     {
         enqueueWork(context, GeofenceTransitionsJobIntentService.class, JOB_ID, intent);

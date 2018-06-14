@@ -32,8 +32,11 @@ public class Constants {
     public static final long GEOFENCE_EXPIRATION_IN_HOURS = 2;
      public static final long GEOFENCE_EXPIRATION_IN_MILLISECONDS =
             GEOFENCE_EXPIRATION_IN_HOURS * 60 * 60 * 1000;
+
   public   static final float GEOFENCE_RADIUS_IN_METERS = 50; // 1 mile, 1.6 km
 
+    public static final String ALARM_CHECKIN=PACKAGE_NAME+".GET_CHECKIN";
+    public static final String DAYS_ELAPSED=PACKAGE_NAME+".DAYS_COUNT";
     /**
      * Map for storing information about Offices in Gurgoan
      */
