@@ -11,6 +11,7 @@ import android.util.Log;
 import com.github.anurag145.impulseattendance.R;
 import com.github.anurag145.impulseattendance.helper.Constants;
 import com.github.anurag145.impulseattendance.helper.NotificationBuilder;
+import com.github.anurag145.impulseattendance.schedulingServices.Alarm;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
@@ -52,6 +53,7 @@ public class GeofenceTransitionsJobIntentService extends JobIntentService {
             Constants.ob.mGeofencingClient.removeGeofences(Constants.ob.getGeofencePendingIntent()).addOnCompleteListener(Constants.ob);
             NotificationCompat.Builder myBuilder = NotificationBuilder.showNotification(getApplicationContext(), geofenceTransitionDetails);
             NotificationManagerCompat.from(this).notify(Constants.NOTIFICATION_ID, myBuilder.build());
+            Alarm.getSingleton().setAlarmCheckOut(this);
             Constants.ob.stopSelf();
 
             Log.i(TAG, geofenceTransitionDetails);

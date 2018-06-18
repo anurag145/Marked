@@ -15,8 +15,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       Alarm ob = new Alarm();
-       ob.setAlarm(getApplicationContext());
+
+       Alarm.getSingleton().setAlarmCheckIn(getApplicationContext());
+       finish();
 
 
 
